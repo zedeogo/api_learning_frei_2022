@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { dobro, somar, media, tabuada, temperatura } from './services.js'
+import { dobro, somar, media, tabuada, temperatura, corPrimaria, freqCaractere, ingressoCinema, maiorNumero } from './services.js'
 
 const server = Router()
 
@@ -91,6 +91,61 @@ server.get('/temperatura', (req, resp) => {
             throw new Error('Valor invalido')
         const response = temperatura(temp);
         resp.send({febre: response})
+    } catch(err){
+        resp.status(404).send({
+            erro: err.message
+        })
+    }
+})
+
+server.get('/dia2/corPrimaria/:cor', (req, resp) => {
+    try{
+        const cor = req.params.cor;
+        const response = corPrimaria(cor);
+        resp.send({primaria: response})
+    } catch(err){
+        resp.status(404).send({
+            erro: err.message
+        })
+    }
+})
+
+server.get('/dia2/freqCaracter/:texto/:caracter', (req, resp) => {
+    try{
+        const texto = req.params.texto;
+        const caracter = req.params.caracter;
+        const response = freqCaractere(texto, caracter)
+        resp.send({freq: response})
+    } catch(err){
+        resp.status(404).send({
+            erro: err.message
+        })
+    }
+})
+
+server.post('/dia2/ingressoCinema', (req, resp) => {
+    try{
+        const { 
+            qtdinteiras:qtdinteiras, 
+            qtdMeias:qtdmeias,
+            diaSemana:diasemana,
+            nacionalidade:nacionalidade
+        } = req.body;
+        
+        let x= ingressoCinema(qtdinteiras, qtdmeias, diasemana, nacionalidade);
+        resp.send({total:x});
+    } catch(err){
+        resp.status(404).send({
+            erro: err.message
+        })
+    }
+})
+
+server.post('/dia2/maiorNumero', (req, resp) => {
+    try{
+        const array = req.body;
+        const response = maiorNumero(array);
+        resp.send ({maior: response});
     } catch(err){
         resp.status(404).send({
             erro: err.message
