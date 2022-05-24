@@ -29,8 +29,8 @@ server.get('/dobro/:numero', (req, resp) => {
 
 server.get('/somar', (req, resp) => {
     try{
-        const a= Number(req.query.a);
-        const b= Number(req.query.b);
+        const a = Number(req.query.a);
+        const b = Number(req.query.b);
         if(isNaN(a, b))
             throw new Error('Valor invalido')
         const response= somar(a, b);
